@@ -1,5 +1,6 @@
 import './App.css'
 import {useState} from "react";
+import Form from "./forms/components/Form.jsx";
 
 const App = () =>  {
     const [data, setData] = useState ({
@@ -54,6 +55,7 @@ const App = () =>  {
                 <div>Message: {data.message}</div>
             </div>
         </form>
+        <Form />
     </>
   )
 }
