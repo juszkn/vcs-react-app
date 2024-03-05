@@ -1,11 +1,11 @@
 import './App.css'
-import Forms from "./components/Generator.jsx";
+import GeneratorPsw from "./components/Generator.jsx";
 
 function App() {
 
   return (
     <>
-        <Forms />
+        <GeneratorPsw />
     </>
   )
 }

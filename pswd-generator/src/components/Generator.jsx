@@ -1,6 +1,18 @@
-import { useState } from "react";
-const Forms = () => {
+import { useState, useEffect } from "react";
+const GeneratorPsw = () => {
     const [password, setPassword] = useState('');
+
+    const [loading, setLoading] = useState(false);
+    const [passwordList, setPasswordList] = useState([]);
+
+    useEffect(() => {
+        let data = localStorage.getItem('data')
+        if (!data)
+            return;
+
+        data = JSON.parse(data)
+        setPasswordList(data)
+    }, [loading]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -36,11 +48,28 @@ const Forms = () => {
             let character = temp[rand(0, temp.length - 1)]
             // console.log(temp)
             finalPassword.push(character)
-
         }
-        console.log(finalPassword)
-        setPassword(finalPassword.join(''));
 
+        console.log(finalPassword);
+        setPassword(finalPassword.join(''));
+        console.log(password);
+
+        // Saving password in local storage
+        const localData = localStorage.getItem('data');
+
+        if (localData) {
+            let convertedData = JSON.parse(localData);
+
+            if (convertedData.length === 10) convertedData.pop()
+            convertedData.unshift(finalPassword.join(""));
+
+            convertedData = JSON.stringify(convertedData);
+            localStorage.setItem('data', convertedData);
+        } else {
+            localStorage.setItem('data', JSON.stringify([finalPassword.join('')]));
+        }
+
+        setLoading(!loading);
     }
 
     // setData({ ...data, [e.target.Password ] : e.target.length })
@@ -89,8 +118,20 @@ const Forms = () => {
                     </button>
                 </div>
             </form>
+            <table>
+                <tbody>
+                {passwordList.map((data, index) => {
+                    return (
+                        <tr key={index}>
+                            <td>{index + 1}</td>
+                            <td>{data}</td>
+                        </tr>
+                    )
+                })}
+                </tbody>
+            </table>
         </>
     )
 }
 
-export default Forms
+export default GeneratorPsw
