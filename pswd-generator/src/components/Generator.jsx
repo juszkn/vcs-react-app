@@ -118,8 +118,9 @@ const GeneratorPsw = () => {
                     </button>
                 </div>
             </form>
-            <table>
+            <table className="table">
                 <tbody>
+                {passwordList.length === 0 && <tr><td>No data</td></tr>}
                 {passwordList.map((data, index) => {
                     return (
                         <tr key={index}>
